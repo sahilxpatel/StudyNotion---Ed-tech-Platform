@@ -1,14 +1,14 @@
 
-<img src='https://github.com/vivek-panchal/Ed-Tech-Platform/blob/main/src/assets/Logo/Logo-Full-Light.png' />
+<img src=https://github.com/sahilxpatel/StudyNotion---Ed-tech-Platform/blob/main/src/assets/Logo/Logo-Full-Light.png />
 
 # Project Description 📝
 StudyNotion is a fully functional ed-tech platform that enables users to create, consume, and rate educational content. <br/>
 The platform is built using the **MERN stack**, which includes ReactJS, NodeJS, MongoDB, and ExpressJS.
 
+# Live Link - https://study-notion-ed-tech-platform-amber.vercel.app/
 
 
-
-<img width='100%' src='https://github.com/vivek-panchal/Ed-Tech-Platform/blob/main/screenshots/home%201.png' />
+<img width='100%' src=https://github.com/sahilxpatel/StudyNotion---Ed-tech-Platform/blob/main/screenshots/home%201.png />
 
 
 
