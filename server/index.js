@@ -15,6 +15,10 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 const PORT = process.env.PORT || 4000;
+const allowedOrigins = (process.env.CLIENT_URL || "")
+	.split(",")
+	.map((origin) => origin.trim())
+	.filter(Boolean);
 
 //database connect
 database.connect();
@@ -23,7 +27,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
 	cors({
-		origin:"*",
+		origin: allowedOrigins.length ? allowedOrigins : true,
 		credentials:true,
 	})
 )
