@@ -15,22 +15,51 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 const PORT = process.env.PORT || 4000;
-const allowedOrigins = (process.env.CLIENT_URL || "")
-	.split(",")
+const allowedOrigins = [
+	process.env.CLIENT_URL,
+	process.env.FRONTEND_URL,
+	process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null,
+]
+	.flatMap((origin) => (origin ? origin.split(",") : []))
 	.map((origin) => origin.trim())
 	.filter(Boolean);
+
+const corsOptions = {
+	origin: (origin, callback) => {
+		if (!origin) {
+			return callback(null, true);
+		}
+
+		if (allowedOrigins.includes(origin)) {
+			return callback(null, true);
+		}
+
+		try {
+			const hostname = new URL(origin).hostname;
+			if (
+				hostname === "localhost" ||
+				hostname === "127.0.0.1" ||
+				hostname.endsWith(".vercel.app")
+			) {
+				return callback(null, true);
+			}
+		} catch (error) {
+			return callback(error);
+		}
+
+		return callback(new Error(`CORS blocked for origin ${origin}`), false);
+	},
+	credentials: true,
+	optionsSuccessStatus: 200,
+};
 
 //database connect
 database.connect();
 //middlewares
 app.use(express.json());
 app.use(cookieParser());
-app.use(
-	cors({
-		origin: allowedOrigins.length ? allowedOrigins : true,
-		credentials:true,
-	})
-)
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 
 app.use(
 	fileUpload({
