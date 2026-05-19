@@ -4,7 +4,7 @@ import GetAvgRating from '../../../utils/avgRating';
 import { Link } from 'react-router-dom';
 import Img from '../../common/Img'
 
-const Course_Card = ({course, Height}) => {
+const CourseCard = ({course, Height}) => {
     const [avgReviewCount, setAvgReviewCount] = useState(0);
 
     useEffect(()=> {
@@ -44,4 +44,4 @@ const Course_Card = ({course, Height}) => {
   )
 }
 
-export default Course_Card
+export default CourseCard

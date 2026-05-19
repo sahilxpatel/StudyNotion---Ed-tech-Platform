@@ -6,3 +6,10 @@ services:
     buildCommand: npm install
     startCommand: npm start
     plan: free
+
+  - type: static
+    name: studynotion-frontend
+    rootDir: .
+    buildCommand: npm run build
+    publishPath: build
+    plan: free

@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react"
+import { useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
 
@@ -13,7 +13,6 @@ import { AiOutlineCaretDown, AiOutlineHome } from "react-icons/ai"
 import { MdOutlineContactPhone } from "react-icons/md"
 import { TbMessage2Plus } from "react-icons/tb"
 import { PiNotebook } from "react-icons/pi"
-import { fetchCourseCategories } from './../../../services/operations/courseDetailsAPI';
 
 
 export default function MobileProfileDropDown() {
@@ -27,26 +26,6 @@ export default function MobileProfileDropDown() {
 
 
     const [open, setOpen] = useState(false)
-    const [subLinks, setSubLinks] = useState([]);
-    const [loading, setLoading] = useState(false);
-
-
-    const fetchSublinks = async () => {
-        try {
-            setLoading(true)
-            const res = await fetchCourseCategories();
-            
-            setSubLinks(res);
-        }
-        catch (error) {
-            console.log("Could not fetch the category list = ", error);
-        }
-        setLoading(false)
-    }
-
-    useEffect(() => {
-        fetchSublinks();
-    }, [])
     if (!user) return null
 
     return (

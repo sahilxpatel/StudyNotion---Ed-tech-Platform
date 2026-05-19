@@ -4,7 +4,6 @@ import {Link} from "react-router-dom"
 import HighlightText from '../components/core/HomePage/HighlightText'
 
 import CTAButton from "../components/core/HomePage/Button"
-import Banner from "../assets/Images/banner.mp4"
 import CodeBlocks from "../components/core/HomePage/CodeBlocks"
 import TimelineSection from '../components/core/HomePage/TimelineSection'
 import LearningLanguageSection from '../components/core/HomePage/LearningLanguageSection'
@@ -12,12 +11,6 @@ import InstructorSection from '../components/core/HomePage/InstructorSection'
 import Footer from '../components/common/Footer'
 import ExploreMore from '../components/core/HomePage/ExploreMore'
 import ReviewSlider from '../components/common/ReviewSlider'
-
-
-import { useDispatch } from 'react-redux';
-import CourseSlider from '../components/core/Catalog/CourseSlider'
-
-import { getCatalogPageData } from '../services/operations/pageAndComponentData'
 
 import { MdOutlineRateReview } from 'react-icons/md'
 

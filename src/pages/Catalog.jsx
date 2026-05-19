@@ -4,16 +4,13 @@ import { useParams } from 'react-router-dom'
 import { apiConnector } from '../services/apiconnector';
 import { categories } from '../services/apis';
 import { getCatalogPageData } from '../services/operations/pageAndComponentData';
-import Course_Card from '../components/core/Catalog/Course_Card';
+import CourseCard from '../components/core/Catalog/Course_Card';
 import CourseSlider from '../components/core/Catalog/CourseSlider';
-import { useSelector } from "react-redux"
-import Error from "./Error"
 import ReviewSlider from "../components/common/ReviewSlider"
 import { MdOutlineRateReview } from 'react-icons/md'
 
 const Catalog = () => {
 
-    const { loading } = useSelector((state) => state.profile)
     const {catalogName} = useParams();
     const [catalogPageData, setCatalogPageData] = useState(null);
     const [categoryId, setCategoryId] = useState("");
@@ -109,7 +106,7 @@ const Catalog = () => {
                         {
                             catalogPageData?.data?.mostSellingCourses?.slice(0,6)
                             .map((course, index) => (
-                                <Course_Card course={course} key={index} Height={"h-[220px]"}/>
+                                <CourseCard course={course} key={index} Height={"h-[220px]"}/>
                             ))
                         }
                     </div>

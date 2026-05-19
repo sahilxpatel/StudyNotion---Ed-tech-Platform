@@ -5,7 +5,6 @@ import { markLectureAsComplete } from '../../../services/operations/courseDetail
 import { updateCompletedLectures } from '../../../slices/viewCourseSlice';
 import { BigPlayButton, Player } from 'video-react';
 import 'video-react/dist/video-react.css';
-import {AiFillPlayCircle} from "react-icons/ai"
 import IconBtn from '../../common/IconBtn';
 
 const VideoDetails = () => {
@@ -28,7 +27,7 @@ const VideoDetails = () => {
     const setVideoSpecificDetails = async() => {
         if(!courseSectionData.length)
             return;
-        if(!courseId && !sectionId && !subSectionId) {
+        if(!courseId || !sectionId || !subSectionId) {
             navigate("/dashboard/enrolled-courses");
         }
         else {
@@ -50,7 +49,7 @@ const VideoDetails = () => {
     }
     setVideoSpecificDetails();
 
-  },[courseSectionData, courseEntireData, location.pathname])
+    },[courseSectionData, courseEntireData, location.pathname, courseId, sectionId, subSectionId, navigate])
 
   const isFirstVideo = () => {
     const currentSectionIndex = courseSectionData.findIndex(
@@ -119,8 +118,6 @@ const VideoDetails = () => {
     const currentSectionIndex = courseSectionData.findIndex(
         (data) => data._id === sectionId
     )
-
-    const noOfSubSections = courseSectionData[currentSectionIndex].subSection.length;
 
     const currentSubSectionIndex = courseSectionData[currentSectionIndex].subSection.findIndex(
         (data) => data._id === subSectionId

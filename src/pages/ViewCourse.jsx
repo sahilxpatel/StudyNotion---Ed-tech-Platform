@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Outlet, useParams } from 'react-router-dom';
 import { getFullDetailsOfCourse } from '../services/operations/courseDetailsAPI';
-import { setCompletedLectures, setCourseSectionData, setEntireCourseData, setTotalNoOfLectures } from '../slices/viewCourseSlice';
+import { setCourseSectionData, setEntireCourseData, setTotalNoOfLectures } from '../slices/viewCourseSlice';
 import VideoDetailsSidebar from '../components/core/ViewCourse/VideoDetailsSidebar';
 import CourseReviewModal from '../components/core/ViewCourse/CourseReviewModal';
 
@@ -15,10 +15,13 @@ const ViewCourse = () => {
 
     useEffect(()=> {
         const setCourseSpecificDetails = async() => {
+              if (!courseId || !token) return;
+
               const courseData = await getFullDetailsOfCourse(courseId, token);
+              if (!courseData?.courseDetails) return;
+
               dispatch(setCourseSectionData(courseData.courseDetails.courseContent));
               dispatch(setEntireCourseData(courseData.courseDetails));
-              dispatch(setCompletedLectures(courseData.completedVideos));
               let lectures = 0;
               courseData?.courseDetails?.courseContent?.forEach((sec) => {
                 lectures += sec.subSection.length
@@ -26,7 +29,7 @@ const ViewCourse = () => {
               dispatch(setTotalNoOfLectures(lectures));
         }
         setCourseSpecificDetails();
-    },[]);
+    },[courseId, token, dispatch]);
 
 
   return (

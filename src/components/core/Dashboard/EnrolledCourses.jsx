@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import ProgressBar from "@ramonak/react-progress-bar"
-import { BiDotsVerticalRounded } from "react-icons/bi"
 import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 
@@ -12,19 +11,18 @@ export default function EnrolledCourses() {
   const navigate = useNavigate()
 
   const [enrolledCourses, setEnrolledCourses] = useState(null)
-  const getEnrolledCourses = async () => {
-    try {
-      const res = await getUserEnrolledCourses(token);
-
-      setEnrolledCourses(res);
-    } catch (error) {
-      console.log("Could not fetch enrolled courses.")
-    }
-  };
   useEffect(() => {
-    getEnrolledCourses();
-  }, [])
-  console.log(enrolledCourses)
+    const fetchData = async () => {
+      try {
+        const res = await getUserEnrolledCourses(token)
+        setEnrolledCourses(res)
+      } catch (error) {
+        console.log("Could not fetch enrolled courses.")
+      }
+    }
+
+    fetchData()
+  }, [token])
 
   return (
     <>
