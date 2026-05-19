@@ -118,7 +118,10 @@ const Navbar = () => {
                                                             ))}
                                                         </>
                                                     ) : (
-                                                        <p className="text-center">No Courses Found</p>
+                                                        <div className="flex flex-col items-center gap-2">
+                                                            <p className="text-center">No categories available</p>
+                                                            <Link to="/" className="rounded-md bg-yellow-25 px-3 py-1 text-sm font-medium text-black">Explore Courses</Link>
+                                                        </div>
                                                     )}
                                             </div>
                                         </div>

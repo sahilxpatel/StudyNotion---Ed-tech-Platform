@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom"
 
 import { addToCart } from "../../../slices/cartSlice"
 import { ACCOUNT_TYPE } from "../../../utils/constants"
+import Img from "../../common/Img"
 
 
 function CourseDetailsCard({ course, setConfirmationModal, handleBuyCourse }) {
@@ -52,9 +53,10 @@ function CourseDetailsCard({ course, setConfirmationModal, handleBuyCourse }) {
         className={`flex flex-col gap-4 rounded-md bg-richblack-700 p-4 text-richblack-5`}
       >
         {/* Course Image */}
-        <img
+        <Img
           src={ThumbnailImage}
           alt={course?.courseName}
+          fallbackText={course?.courseName}
           className="max-h-[300px] min-h-[180px] w-[400px] overflow-hidden rounded-2xl object-cover md:max-w-full"
         />
 

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import RatingStars from '../../common/RatingStars'
 import GetAvgRating from '../../../utils/avgRating';
 import { Link } from 'react-router-dom';
+import Img from '../../common/Img'
 
 const Course_Card = ({course, Height}) => {
     const [avgReviewCount, setAvgReviewCount] = useState(0);
@@ -16,9 +17,10 @@ const Course_Card = ({course, Height}) => {
       <Link to={`/courses/${course._id}`}>
         <div className="">
           <div className="rounded-lg">
-            <img
+            <Img
               src={course?.thumbnail}
-              alt="course thumnail"
+              alt={course?.courseName}
+              fallbackText={course?.courseName}
               className={`${Height} w-full rounded-xl object-cover `}
             />
           </div>

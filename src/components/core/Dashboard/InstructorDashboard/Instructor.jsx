@@ -4,6 +4,7 @@ import { fetchInstructorCourses } from '../../../../services/operations/courseDe
 import { getInstructorData } from '../../../../services/operations/profileAPI';
 import InstructorChart from './InstructorChart';
 import { Link } from 'react-router-dom';
+import Img from '../../../common/Img';
 
 export default function Instructor() {
     const { token } = useSelector((state) => state?.auth)
@@ -98,10 +99,11 @@ export default function Instructor() {
               <div className="my-4 flex items-start space-x-6">
                 {courses.slice(0, 3).map((course) => (
                   <div key={course._id} className="w-1/3">
-                    <img
+                    <Img
                       src={course?.thumbnail}
                       alt={course?.courseName}
-                      className="h-180px] w-full rounded-md object-cover"
+                      fallbackText={course?.courseName}
+                      className="h-[180px] w-full rounded-md object-cover"
                     />
                     <div className="mt-3 w-full">
                       <p className="text-sm font-medium text-richblack-50">

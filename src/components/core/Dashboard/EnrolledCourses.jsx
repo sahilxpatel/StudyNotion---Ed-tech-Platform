@@ -4,6 +4,7 @@ import { BiDotsVerticalRounded } from "react-icons/bi"
 import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 
+import Img from "../../common/Img"
 import { getUserEnrolledCourses } from "../../../services/operations/profileAPI"
 
 export default function EnrolledCourses() {
@@ -61,9 +62,10 @@ export default function EnrolledCourses() {
                   )
                 }}
               >
-                <img
+                <Img
                   src={course.thumbnail}
-                  alt="course_img"
+                  alt={course.courseName}
+                  fallbackText={course.courseName}
                   className="h-14 w-24 rounded-lg object-cover"
                 />
                 <div className="flex max-w-xs flex-col gap-2">

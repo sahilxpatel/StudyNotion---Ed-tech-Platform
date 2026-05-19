@@ -17,6 +17,7 @@ import {
 } from "../../../../services/operations/courseDetailsAPI"
 import { COURSE_STATUS } from "../../../../utils/constants"
 import ConfirmationModal from "../../../common/ConfirmationModal"
+import Img from "../../../common/Img"
 
 export default function CoursesTable({ courses, setCourses }) {
   const dispatch = useDispatch()
@@ -73,9 +74,10 @@ export default function CoursesTable({ courses, setCourses }) {
                 className="flex gap-x-10 border-b border-richblack-800 px-6 py-8"
               >
                 <Td className="flex flex-1 gap-x-4">
-                  <img
+                  <Img
                     src={course?.thumbnail}
                     alt={course?.courseName}
+                    fallbackText={course?.courseName}
                     className="h-[144px] w-[260px] rounded-lg object-cover"
                   />
                   <div className="flex flex-col justify-between">

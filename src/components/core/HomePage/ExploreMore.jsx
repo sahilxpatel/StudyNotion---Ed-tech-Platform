@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { HomePageExplore } from "../../../data/homepage-explore";
 import CourseCard from "./CourseCard";
 import HighlightText from "./HighlightText";
+import { apiConnector } from "../../../services/apiconnector";
+import { courseEndpoints } from "../../../services/apis";
 
 const tabsName = [
   "Free",
@@ -17,12 +19,79 @@ const ExploreMore = () => {
   const [currentCard, setCurrentCard] = useState(
     HomePageExplore[0].courses[0].heading
   );
+  const [fetchedTagMap, setFetchedTagMap] = useState(null);
+
+  useEffect(() => {
+    // Fetch published courses from backend and map them into tabs by tag
+    const fetchCourses = async () => {
+      try {
+        const response = await apiConnector("GET", courseEndpoints.GET_ALL_COURSE_API);
+        if (response?.data?.success) {
+          const allCourses = response.data.data || [];
+
+          // build a mapping from tag -> courses array
+          const tagMap = {};
+          tabsName.forEach((t) => (tagMap[t] = []));
+
+          allCourses.forEach((c) => {
+            if (Array.isArray(c.tag) && c.tag.length > 0) {
+              c.tag.forEach((t) => {
+                const normalizedTag = t.trim();
+                const matchTab = tabsName.find((tab) => tab.toLowerCase() === normalizedTag.toLowerCase());
+                if (matchTab) {
+                  tagMap[matchTab].push(c);
+                }
+              });
+            }
+          });
+
+          setFetchedTagMap(tagMap);
+
+          // If no courses found for a tab, keep the static fallback
+          const newCourses = tagMap[currentTab] && tagMap[currentTab].length ? tagMap[currentTab] : HomePageExplore[0].courses;
+          setCourses(newCourses.map((course) => ({
+            // map backend course to cardData shape used by CourseCard
+            heading: course.courseName,
+            description: course.courseDescription || course.whatYouWillLearn || "",
+            level: "Beginner",
+            lessionNumber: course.courseContent ? course.courseContent.length : 0,
+            _rawCourse: course,
+          })));
+          setCurrentCard((prev) => (newCourses[0] ? (newCourses[0].courseName || newCourses[0].heading) : prev));
+        }
+      } catch (error) {
+        // ignore and use static data
+      }
+    };
+
+    fetchCourses();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const setMyCards = (value) => {
     setCurrentTab(value);
+    // prefer fetched data if available
+    if (fetchedTagMap && fetchedTagMap[value] && fetchedTagMap[value].length) {
+      const mapped = fetchedTagMap[value].map((course) => ({
+        heading: course.courseName,
+        description: course.courseDescription || course.whatYouWillLearn || "",
+        level: "Beginner",
+        lessionNumber: course.courseContent ? course.courseContent.length : 0,
+        _rawCourse: course,
+      }));
+      setCourses(mapped);
+      setCurrentCard(mapped[0]?.heading || "");
+      return;
+    }
+
     const result = HomePageExplore.filter((course) => course.tag === value);
-    setCourses(result[0].courses);
-    setCurrentCard(result[0].courses[0].heading);
+    if (result && result[0]) {
+      setCourses(result[0].courses);
+      setCurrentCard(result[0].courses[0].heading);
+    } else {
+      setCourses([]);
+      setCurrentCard("");
+    }
   };
 
   return (
